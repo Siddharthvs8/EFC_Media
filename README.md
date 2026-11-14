@@ -163,14 +163,25 @@ and three starter articles, and uploads the logo and cover artwork to media stor
 
 ## Deploying to Vercel
 
-The project is already deployed. To redeploy after a code change:
+The Vercel project is connected to the GitHub repository
+[Siddharthvs8/EFC_Media](https://github.com/Siddharthvs8/EFC_Media):
+
+- **Push to `main`** → production deployment (https://efc-media.vercel.app).
+- **Push any other branch / open a pull request** → preview deployment with its own URL.
 
 ```bash
-vercel deploy --prod
+git add -A
+git commit -m "Describe the change"
+git push origin main
 ```
 
-Vercel runs `npm run ci` (see `vercel.ts`): it applies pending migrations and builds.
-Content changes never need a deploy.
+On every deployment Vercel runs `npm run ci` (see `vercel.ts`): it applies pending
+migrations and builds. Content changes made in the admin never need a deploy.
+
+> Preview deployments share the production database, and the build applies migrations.
+> Test schema changes against the development database first (see [Database](#database)).
+
+`vercel deploy --prod` from the CLI still works for emergencies, but Git is the normal path.
 
 ### Setting up a new Vercel project from scratch
 
@@ -203,7 +214,7 @@ vercel deploy --prod
 Then, in the Vercel dashboard:
 
 - **Domains** → add the real domain, set `NEXT_PUBLIC_SITE_URL` to it and redeploy.
-- **Git** → connect the repository so pushes deploy automatically (optional; the CLI works too).
+- **Git** → connect the repository (`vercel git connect <repo-url>`) so pushes deploy automatically.
 - **Email** → add `RESEND_API_KEY` (or the `SMTP_*` variables), `EMAIL_FROM_ADDRESS` and
   `CONTACT_TO_EMAIL`, then redeploy. With Resend from the Marketplace:
   `vercel integration add resend -m domain=yourdomain.com -m region=ap-northeast-1`
