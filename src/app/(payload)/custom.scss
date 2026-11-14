@@ -1,0 +1,136 @@
+/* EFC Media admin touches. Uses Payload's theme variables so light and dark modes both work. */
+
+:root {
+  --efc-sun: #f9bb08;
+  --efc-flame: #fe7322;
+}
+
+.efc-dash {
+  margin-bottom: calc(var(--base) * 2);
+
+  &__header {
+    border-bottom: 1px solid var(--theme-elevation-150);
+    margin-bottom: calc(var(--base) * 1.25);
+    padding-bottom: calc(var(--base) * 1.25);
+  }
+
+  &__eyebrow {
+    color: var(--theme-elevation-600);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    margin: 0 0 8px;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    font-size: clamp(28px, 3.4vw, 40px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 10px;
+  }
+
+  &__lead {
+    color: var(--theme-elevation-800);
+    margin: 0;
+    max-width: 62ch;
+  }
+
+  &__grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    list-style: none;
+    margin: 0 0 calc(var(--base) * 1.25);
+    padding: 0;
+  }
+
+  &__card {
+    background: var(--theme-elevation-50);
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: var(--style-radius-m, 6px);
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    height: 100%;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition:
+      border-color 0.15s ease,
+      transform 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+      border-color: var(--efc-flame);
+      transform: translateY(-1px);
+    }
+  }
+
+  &__card-label {
+    align-items: center;
+    display: flex;
+    font-weight: 600;
+    gap: 8px;
+  }
+
+  &__card-text {
+    color: var(--theme-elevation-600);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  &__badge {
+    background: linear-gradient(225deg, var(--efc-sun), var(--efc-flame));
+    border-radius: 999px;
+    color: #1d1b19;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+  }
+
+  &__checklist {
+    background: var(--theme-elevation-50);
+    border: 1px solid var(--theme-elevation-150);
+    border-left: 3px solid var(--efc-flame);
+    border-radius: var(--style-radius-m, 6px);
+    padding: 16px 18px;
+
+    h3 {
+      font-size: 15px;
+      margin: 0 0 8px;
+    }
+
+    ul {
+      display: grid;
+      gap: 6px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      color: var(--theme-elevation-800);
+      font-size: 14px;
+      line-height: 1.5;
+      padding-left: 24px;
+      position: relative;
+
+      &::before {
+        content: '○';
+        left: 0;
+        position: absolute;
+      }
+
+      &[data-done='true']::before {
+        color: var(--theme-success-500, #2e9e5b);
+        content: '●';
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .efc-dash__card {
+    transition: none;
+  }
+}
