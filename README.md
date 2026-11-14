@@ -85,7 +85,6 @@ add a `.env.development.local` that overrides the database (see [Database](#data
 | `CONTACT_TO_EMAIL` | for email | Default recipient of enquiry notifications |
 | `EMAIL_FROM_ADDRESS`, `EMAIL_FROM_NAME` | for email | Sender of notification emails |
 | `RESEND_API_KEY` **or** `SMTP_HOST`/`SMTP_PORT`/`SMTP_USER`/`SMTP_PASS` | for email | Email provider |
-| `PUBLISH_CRON_SCHEDULE` | optional | Cron expression for scheduled publishing (default: daily) |
 | `BLOB_PREFIX` | optional | Folder inside the Blob store (e.g. `dev`) |
 | `FORM_SECRET` | optional | Separate secret for form tokens |
 | `SEED_ADMIN_EMAIL`, `SEED_ADMIN_PASSWORD` | seeding only | First admin account created by `npm run seed` |
@@ -225,7 +224,7 @@ Notes
 - Function region is `sin1` (in `vercel.ts`), matching the database region.
 - **Scheduled publishing** uses a Vercel Cron that calls `/api/payload-jobs/run`. Hobby
   projects may run a cron once a day, so by default scheduled items publish at the next
-  daily run (06:00 IST). On Pro, set `PUBLISH_CRON_SCHEDULE` to `*/5 * * * *` and redeploy.
+  daily run (06:00 IST). On Pro, change the schedule in `vercel.ts` to `*/5 * * * *` and push.
 - Vercel's Hobby plan is for non-commercial use; a business site belongs on Pro.
 
 ---
