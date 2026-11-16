@@ -4,6 +4,12 @@ import { useEffect } from 'react'
 
 declare global {
   interface Window {
+    /** Set by the logo intro script (src/lib/intro.ts): ends the intro immediately. */
+    __introEnd?: () => void
+    /** True while the logo intro holds scroll reveals back. */
+    __introHold?: boolean
+    /** A reveal scan was requested during the intro; it runs when the intro hands over. */
+    __introPending?: boolean
     __motionReady?: boolean
     /** Set by the inline script in the root layout: (re)observes [data-reveal] elements. */
     __reveal?: () => void

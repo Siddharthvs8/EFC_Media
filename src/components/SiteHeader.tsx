@@ -16,6 +16,8 @@ export type HeaderLogo = { height: number; src: string; width: number }
 
 type Props = {
   cta: null | ResolvedLink
+  /** The logo is the supplied symbol, so the logo intro can land on it. */
+  introTarget?: boolean
   logo: HeaderLogo
   nav: ResolvedLink[]
   siteName: string
@@ -80,7 +82,7 @@ const startsWithDarkSection = () =>
 
 const serverFalse = () => false
 
-export const SiteHeader: React.FC<Props> = ({ cta, logo, nav, siteName }) => {
+export const SiteHeader: React.FC<Props> = ({ cta, introTarget, logo, nav, siteName }) => {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const toggleRef = useRef<HTMLButtonElement>(null)
@@ -151,9 +153,10 @@ export const SiteHeader: React.FC<Props> = ({ cta, logo, nav, siteName }) => {
     <>
       <header className="site-header text-fg" data-scrolled={scrolled && !open} data-theme={tone}>
         <div className="wrap site-header__bar">
-          <Link aria-label={`${siteName} — home`} className="flex shrink-0 items-center" href="/">
+          <Link aria-label={`${siteName} — home`} className="site-header__logo flex shrink-0 items-center" href="/">
             <Image
               alt=""
+              data-intro-target={introTarget ? '' : undefined}
               height={logoHeight}
               loading="eager"
               sizes={`${logoWidth}px`}

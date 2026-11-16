@@ -1,17 +1,23 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 
-import { motionReady, scrollThrough, trackErrors } from './helpers'
+import { motionReady, scrollThrough, skipIntro, trackErrors } from './helpers'
 
 /**
  * Public site: every page renders, navigation works with mouse, touch and keyboard,
  * motion behaves (and gets out of the way for reduced-motion users), and there are no
  * serious accessibility violations. Safe to run against a deployed site.
+ *
+ * Pages open as for a returning visitor; the logo intro has its own tests (intro.spec.ts).
  */
 
 const PAGES = ['/', '/about', '/services', '/work', '/insights', '/contact', '/privacy']
 
 const isMobile = () => test.info().project.name === 'mobile'
+
+test.beforeEach(async ({ page }) => {
+  await skipIntro(page)
+})
 
 test.describe('pages', () => {
   for (const path of PAGES) {

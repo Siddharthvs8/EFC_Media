@@ -334,6 +334,21 @@ brand book's blue/navy is not used as a theme colour.
 - *Motion.* CSS entrances, scroll reveals and a few scroll-linked effects driven by one
   small script (`src/components/Motion.tsx`). Scrolling is always native. With
   `prefers-reduced-motion`, everything is shown in its final state.
+- *Logo intro.* The first page a visitor opens in a browser session starts with the logo
+  assembling itself: the two arcs of the ring sweep into place, the arrow launches out of
+  the ring, the wordmark rises, and then the symbol flies into the header logo's place
+  while the page fades in underneath (about 3 seconds). It is cut from the supplied logo
+  file itself and settles on the untouched artwork.
+  - Plays once per session; reloads and further pages go straight to the content. Add
+    `?intro` to any URL to see it again.
+  - Any key press, click, tap or scroll skips it. It never plays with
+    `prefers-reduced-motion`, in draft preview / Live Preview, or if the logo file takes
+    longer than about 2 seconds to load (the page then appears normally).
+  - It is only shown while Site settings uses the supplied logo (or none). After a new
+    logo is uploaded it switches itself off, because it is built from the current artwork.
+  - Code: `src/lib/intro.ts` (when it plays and its timeline), `src/components/Intro.tsx`
+    (the layers) and the "Logo intro" section of `globals.css` (the choreography). Only
+    `transform` and `opacity` animate, so it stays smooth while the page loads.
 
 **SEO.** Per-document SEO fields, canonical URLs, Open Graph/Twitter cards (uploaded image,
 site default, or a generated card from `/og`), `sitemap.xml`, `robots.txt`, and JSON-LD
@@ -360,6 +375,9 @@ PW_CHANNEL=chrome npm run test:e2e
   and API access rules.
 - `tests/e2e/contact.spec.ts` — labels, validation, spam protection and a real submission
   (set `E2E_SKIP_SUBMIT=true` to skip the submission).
+- `tests/e2e/intro.spec.ts` — the logo intro: plays once per session, lands exactly on the
+  header logo, skips on a key press, `?intro` replays it, never with reduced motion. The
+  other suites open pages as a returning visitor, with the intro already seen.
 - `tests/e2e/admin.spec.ts` — signs in and edits the hero, adds a service, publishes a case
   study, changes the navigation, uploads an image and checks preview. These tests change
   content, so they **only run against a local server** and use the admin account from

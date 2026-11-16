@@ -1,11 +1,17 @@
 import { expect, test } from '@playwright/test'
 
+import { skipIntro } from './helpers'
+
 /**
  * Contact form: accessible validation, spam protection and a successful submission.
  *
  * The success test stores a real enquiry (marked "Automated test") in whichever database
  * the target site uses. Set E2E_SKIP_SUBMIT=true to leave that test out.
  */
+
+test.beforeEach(async ({ page }) => {
+  await skipIntro(page)
+})
 
 const openForm = async (page: import('@playwright/test').Page) => {
   await page.goto('/contact')

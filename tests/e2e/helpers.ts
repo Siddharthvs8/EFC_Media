@@ -33,6 +33,23 @@ export const scrollThrough = async (page: Page): Promise<void> => {
   })
 }
 
+/** sessionStorage key the logo intro sets once it has played (src/lib/intro.ts). */
+export const INTRO_SEEN_KEY = 'efc-intro'
+
+/**
+ * Starts the page as a returning visitor in the same session: the logo intro (which plays
+ * once per session) has already been seen. Its own behaviour is covered in intro.spec.ts.
+ */
+export const skipIntro = async (page: Page): Promise<void> => {
+  await page.addInitScript((key) => {
+    try {
+      window.sessionStorage.setItem(key, '1')
+    } catch {
+      // Storage unavailable: the intro cannot play either.
+    }
+  }, INTRO_SEEN_KEY)
+}
+
 /** Resolves once the motion script has started (it marks itself on window). */
 export const motionReady = (page: Page) =>
   page.waitForFunction(() => (window as { __motionReady?: boolean }).__motionReady === true)

@@ -3,6 +3,7 @@ import React from 'react'
 import type { Setting } from '@/payload-types'
 
 import { getHeader, getSettings } from '@/lib/data'
+import { isSuppliedMark } from '@/lib/intro'
 import { type ResolvedLink, resolveLink } from '@/lib/links'
 
 import { isPopulatedMedia } from './Media'
@@ -30,10 +31,14 @@ export async function Header() {
     .map((item) => resolveLink(item.link))
     .filter((link): link is ResolvedLink => link !== null)
 
+  const logo = headerLogo(settings)
+
   return (
     <SiteHeader
       cta={resolveLink(header.cta)}
-      logo={headerLogo(settings)}
+      // The logo intro's symbol lands on the header logo when that is the same symbol.
+      introTarget={isSuppliedMark(logo.width, logo.height)}
+      logo={logo}
       nav={nav}
       siteName={settings.siteName}
     />

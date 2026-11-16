@@ -18,6 +18,10 @@ export const PageTransition: React.FC<{ children: React.ReactNode }> = ({ childr
       return
     }
 
+    // Leaving the first page ends the logo intro at once, so the next page's entrance is
+    // not held back for it.
+    window.__introEnd?.()
+
     const element = ref.current
     if (!element) return
 

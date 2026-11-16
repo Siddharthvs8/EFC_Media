@@ -2,7 +2,7 @@ import type { APIRequestContext, Page } from '@playwright/test'
 
 import { expect, test } from '@playwright/test'
 
-import { isLocalTarget } from './helpers'
+import { isLocalTarget, skipIntro } from './helpers'
 
 /**
  * Admin flows: sign in through the real login screen, then make the changes an editor
@@ -55,9 +55,10 @@ type Doc = { id: number } & Record<string, unknown>
 test.describe('admin', () => {
   test.describe.configure({ mode: 'serial' })
 
-  test.beforeEach(async ({ baseURL }) => {
+  test.beforeEach(async ({ baseURL, page }) => {
     test.skip(!isLocalTarget(baseURL), 'Admin flows change content and only run against a local server.')
     test.skip(!email || !password, 'Set SEED_ADMIN_EMAIL and SEED_ADMIN_PASSWORD (see .env.example).')
+    await skipIntro(page)
   })
 
   test('the dashboard shows the welcome panel and every content area', async ({ page }) => {
